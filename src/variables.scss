@@ -1,0 +1,47 @@
+/*colors*/
+
+$blue: #2f95e3;
+$indigo: #2fbfe3;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #e3342f;
+$white: #fff;
+$gray: #6c757d;
+$gray-dark: #343a40;
+$primary: #2591ae;
+$secondary: #6c757d;
+$success: #38c172;
+$info: #e3342f;
+$warning: #ffed4a;
+$danger: #fb8f8a;
+$light: #f8f9fa;
+$dark: #1b1f3b;
+
+/*size*/
+
+$text-xs:12px;
+$text-lg:18px;
+$text-xl:26px;
+
+
+/*breakpoint*/
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+
+:export {
+    blue:$blue;
+    indigo:$indigo;
+    purple:$purple;
+    dark:$dark;
+    light:$light;
+  }
