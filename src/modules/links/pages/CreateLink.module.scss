@@ -11,20 +11,29 @@
       text-align: left;
       margin-bottom: 10px;
     }
-    .input {
-      background-clip: padding-box;
-      background-color: #fff;
-      border: 1px solid #ced4da;
-      border-radius: 5px;
-      color: #495057;
-      display: block;
-      font-size: 14px;
-      padding: 6px;
-      font-weight: 400;
-      width: 100%;
-    }
-    .input:focus {
-      outline: none;
+    .input_container{
+      .input {
+        background-clip: padding-box;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        color: #495057;
+        display: block;
+        font-size: 14px;
+        padding: 6px;
+        font-weight: 400;
+        width: 100%;
+      }
+      .input:focus {
+        outline: none;
+      }
+      .input_error{
+        display: block;
+        margin-top:4px;
+        margin-left: 5px;
+        color:#e3342f;
+        font-size: 10px;
+      }
     }
     .button {
       margin-top: 20px;

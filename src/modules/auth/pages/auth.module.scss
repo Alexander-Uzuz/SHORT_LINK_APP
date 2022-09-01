@@ -1,13 +1,13 @@
 .wrapper {
   position: relative;
-  .error{
+  .error {
     display: inline-block;
     position: absolute;
-    right:15px;
-    top:15px;
+    right: 15px;
+    top: 15px;
     padding: 10px;
     border-radius: 5px;
-    color:#fff;
+    color: #fff;
     background-color: #e3342f;
   }
   .container {
@@ -38,21 +38,31 @@
       text-align: center;
       margin-bottom: 10px;
     }
-    .input {
-      display: block;
-      width: 350px;
-      padding: 10px;
+    .input_container {
+      position:relative;
       margin-bottom: 10px;
-      background-clip: padding-box;
-      background-color: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: 0.3125rem;
-      color: #495057;
-      font-weight: 400;
-    }
-    .input:focus {
-      border-color: #ced4da;
-      outline: 0;
+      .input {
+        display: block;
+        width: 350px;
+        padding: 10px;
+        background-clip: padding-box;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 0.3125rem;
+        color: #495057;
+        font-weight: 400;
+      }
+      .input:focus {
+        border-color: #ced4da;
+        outline: 0;
+      }
+      .input_error{
+        display: block;
+        margin-top:4px;
+        margin-left: 5px;
+        color:#e3342f;
+        font-size: 10px;
+      }
     }
     .button {
       width: 370px;
