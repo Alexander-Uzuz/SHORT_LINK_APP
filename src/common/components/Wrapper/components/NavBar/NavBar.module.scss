@@ -1,0 +1,39 @@
+.container {
+  width: 210px;
+  background: #1b1f3b;
+  height: 100vh;
+  padding: 20px;
+
+  .logo_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  
+    .logo_container {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 50%;
+      width: 65px;
+      height: 65px;
+  
+      .logo {
+        width: 65px;
+        height: 65px;
+      }
+    }
+  }
+
+  .list{
+    .item{
+        margin-bottom: 15px;
+        a{
+            text-decoration: none;
+            font-weight: 700;
+            color: #868e96;
+        }
+    }
+  }
+}
+
+
+

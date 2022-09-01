@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(88, 115, 254, 0.04);
+  padding: 15px;
+  .arrow_right {
+    width: 37px;
+    height: 25px;
+    cursor: pointer;
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+
+    p {
+      font-size: 16px;
+      font-weight: 700;
+      color: #252525;
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}
