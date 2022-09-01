@@ -1,0 +1,41 @@
+.wrapper {
+  .container {
+    padding: 0 40px;
+    .title {
+      text-align: center;
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    .label {
+      display: block;
+      text-align: left;
+      margin-bottom: 10px;
+    }
+    .input {
+      background-clip: padding-box;
+      background-color: #fff;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      color: #495057;
+      display: block;
+      font-size: 14px;
+      padding: 6px;
+      font-weight: 400;
+      width: 100%;
+    }
+    .input:focus {
+      outline: none;
+    }
+    .button {
+      margin-top: 20px;
+      background-color: #2591ae;
+      border-color: #2591ae;
+      color: #fff;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+      font-weight: 400;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  }
+}

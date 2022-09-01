@@ -1,0 +1,90 @@
+.table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  box-shadow: 0 5px 20pxrgba(0,0,0,.1);
+
+  .caption {
+    font-size: 24px;
+    margin:20px 0;
+  }
+
+  .tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+  }
+
+  .tr,
+  .thead_tr {
+    padding: 0.35em;
+
+    .th,
+    .td {
+      padding: 0.625em;
+      text-align: center;
+
+      div {
+        display: inline-block;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #2591ae;
+        img {
+          width: 12.5px;
+          height: 14.5px;
+        }
+      }
+    }
+
+    .th {
+      font-size: 0.85em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+  }
+  .tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .table {
+    border: 0;
+    .caption {
+      font-size: 1.3em;
+    }
+    .thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    .tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: 0.625em;
+      .td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: 0.8em;
+        text-align: right;
+      }
+
+      .td::before {
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .td:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+}

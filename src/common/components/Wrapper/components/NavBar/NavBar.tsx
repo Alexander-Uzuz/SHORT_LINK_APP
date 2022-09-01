@@ -17,16 +17,13 @@ export const NavBar = (props: Props) => {
         </div>
         <ul className={styles.list}>
           <li className={styles.item}>
-            <Link to="/ooo">Сократить</Link>
+            <Link to="/links">Мои ссылки</Link>
           </li>
           <li className={styles.item}>
-            <Link to="/ooo">Сократить</Link>
+            <Link to="/links/create">Сократить</Link>
           </li>
           <li className={styles.item}>
-            <Link to="/ooo">Сократить</Link>
-          </li>
-          <li className={styles.item}>
-            <Link to="/ooo">Сократить</Link>
+            <Link to="/login">Выйти</Link>
           </li>
         </ul>
       </div>
