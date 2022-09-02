@@ -1,27 +1,30 @@
 import React from "react";
-import { useAppDispatch,useAppSelector } from "core/redux/hooks";
-import { post } from "api/baseUrl";
+import { useAppDispatch, useAppSelector } from "core/redux/hooks";
+import { BASE_URL } from "api/baseUrl";
+import { fetchAddLink } from "../linksThunk";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./CreateLink.module.scss";
 
 type Props = {};
 
 interface IForm {
-  text: string;
+  link: string;
 }
 
 export const CreateLinks = (props: Props) => {
-  const {token} = useAppSelector(state => state.user.user) 
+  const { token } = useAppSelector((state) => state.user.user);
+  const { currentLink } = useAppSelector((state) => state.links);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IForm>();
+  const dispatch = useAppDispatch();
 
-  const onSubmit: SubmitHandler<IForm> = async(data) => {
-    const _token = token ? token : '';
-    const response = post(`/squeeze?link=${data.text}`,undefined, _token)
-  }
+  const onSubmit: SubmitHandler<IForm> = async ({ link }) => {
+    const _token = token ? token : "";
+    dispatch(fetchAddLink({ link, token: _token }));
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -37,9 +40,9 @@ export const CreateLinks = (props: Props) => {
               id="input"
               type="text"
               placeholder="Введите длинную ссылку"
-              {...register("text", { required: true })}
+              {...register("link", { required: true })}
             />
-            {errors.text && (
+            {errors.link && (
               <span className={styles.input_error}>
                 Данное поле является обязательным
               </span>
@@ -47,6 +50,22 @@ export const CreateLinks = (props: Props) => {
           </div>
           <button className={styles.button}>Сократить</button>
         </form>
+        {currentLink && (
+          <>
+            <div className={styles.input_container}>
+              <label className={styles.label} htmlFor="input">
+                Короткая ссылка
+              </label>
+              <input
+                className={styles.input}
+                type="text"
+                value={`${BASE_URL}/${currentLink.short}`}
+                disabled
+              />
+            </div>
+            <button className={styles.button}>Копировать</button>
+          </>
+        )}
       </div>
     </div>
   );

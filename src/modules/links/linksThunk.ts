@@ -24,10 +24,10 @@ export const fetchGetLinks = createAsyncThunk(
 
 export const fetchAddLink = createAsyncThunk(
     'links/fetchAddLink',
-    async function (data:{text:string,token:string},{rejectWithValue}){
-        const {text, token} = data;
+    async function (data:{link:string,token:string},{rejectWithValue}){
+        const {link, token} = data;
         try{
-            const response = await addLink(text,token);
+            const response = await addLink(link,token);
 
             return response
         }catch(error:any){

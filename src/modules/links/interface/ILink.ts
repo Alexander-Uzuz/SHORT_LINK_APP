@@ -7,6 +7,7 @@ export interface ILink{
 
 export interface IInitialState{
     links:ILink[];
+    currentLink:ILink | null;
     loading:boolean;
     error:string | null;
 }

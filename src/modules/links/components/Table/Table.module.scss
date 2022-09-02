@@ -5,11 +5,11 @@
   padding: 0;
   width: 100%;
   table-layout: fixed;
-  box-shadow: 0 5px 20pxrgba(0,0,0,.1);
+  box-shadow: 0 5px 20pxrgba (0, 0, 0, 0.1);
 
   .caption {
     font-size: 24px;
-    margin:20px 0;
+    margin: 20px 0;
   }
 
   .tr {
@@ -27,6 +27,7 @@
       text-align: center;
 
       div {
+        cursor: pointer;
         display: inline-block;
         padding: 12px;
         border-radius: 10px;
