@@ -1,4 +1,6 @@
 import React from "react";
+import { useAppDispatch,useAppSelector } from "core/redux/hooks";
+import { post } from "api/baseUrl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./CreateLink.module.scss";
 
@@ -9,13 +11,17 @@ interface IForm {
 }
 
 export const CreateLinks = (props: Props) => {
+  const {token} = useAppSelector(state => state.user.user) 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IForm>();
 
-  const onSubmit: SubmitHandler<IForm> = (data) => console.log(data, "data");
+  const onSubmit: SubmitHandler<IForm> = async(data) => {
+    const _token = token ? token : '';
+    const response = post(`/squeeze?link=${data.text}`,undefined, _token)
+  }
 
   return (
     <div className={styles.wrapper}>

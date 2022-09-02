@@ -18,12 +18,14 @@ const request = async (
   url: string,
   data: { method: string; body?: string; token?: string }
 ) => {
-  const headersToken = data.token ? { Authorization: `Bearer ${data.token}` } : "";
+  const headersToken = data.token
+    ? { Authorization: `Bearer ${data.token}` }
+    : "";
   const headersMultiPart =
-    typeof data.body === "string"
+    typeof data.body === "string" && !data.token
       ? {
           "Content-Type": "application/x-www-form-urlencoded",
-          "accept": "application/json",
+          accept: "application/json",
         }
       : "";
 
@@ -32,7 +34,7 @@ const request = async (
       ...headersToken,
       ...headersMultiPart,
     },
-    ...data
+    ...data,
   });
   if (response.ok) {
     if (response.headers.get("Content-Length") === "0") {
@@ -48,9 +50,8 @@ const request = async (
   }
 };
 
-export const post = (url: string, body?: string) => {
-  return request(`${BASE_URL}${url}`, { method: "POST", body });
+export const post = (url: string, body?: string, token?: string) => {
+  return request(`${BASE_URL}${url}`, { method: "POST", body, token });
 };
 
-// export const get = (url: string, token: string) => request(`${BASE_URL}${url}`, {method: "GET"})
-
+export const get = (url: string, token: string) => request(`${BASE_URL}${url}`, {method: "GET",token})
