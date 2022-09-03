@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
 import { fetchUserLogin } from "modules/auth/authThunk";
+import { Notification } from "common/components/Notification/Notification";
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { post } from "api/baseUrl";
 import { Link } from "react-router-dom";
 import Logo from "assets/icons/logo.svg";
 import styles from "../auth.module.scss";
@@ -22,18 +22,19 @@ export const Login: FC<Props> = (props) => {
     formState: { errors },
   } = useForm<Inputs>();
   const { error } = useAppSelector((state) => state.user);
+  const [send,setSend] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) =>
+  const onSubmit: SubmitHandler<Inputs> = async (data) =>{
+    setSend(true)
     dispatch(fetchUserLogin({ ...data, cb: () => navigate("/links") }));
+  }
 
   return (
     <div className={styles.wrapper}>
-      {error && (
-        <div>
-          <p className={styles.error}>{error}</p>
-        </div>
+      {error && send && (
+        <Notification text={error} status="error"/>
       )}
       <div className={styles.container}>
         <img className={styles.logo} src={Logo} alt="Logo" />

@@ -26,10 +26,11 @@
   .list{
     .item{
         margin-bottom: 15px;
-        a{
+        a,span{
             text-decoration: none;
             font-weight: 700;
             color: #868e96;
+            cursor: pointer;
         }
     }
   }

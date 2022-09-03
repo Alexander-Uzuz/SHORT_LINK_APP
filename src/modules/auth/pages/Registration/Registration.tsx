@@ -1,5 +1,6 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Notification } from "common/components/Notification/Notification";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
 import {fetchUserRegistration} from "../../authThunk";
 import { Link } from "react-router-dom";
@@ -24,17 +25,19 @@ export const Registration: FC<Props> = (props) => {
     reValidateMode: "onSubmit",
   });
   const { error } = useAppSelector((state) => state.user);
+  const [send,setSend] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => dispatch(fetchUserRegistration({...data,cb:() => navigate('/links')}))
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setSend(true)
+    dispatch(fetchUserRegistration({...data,cb:() => navigate('/links')}))
+  }
 
   return (
     <div className={styles.wrapper}>
-      {error && (
-        <div>
-          <p className={styles.error}>{error}</p>
-        </div>
+      {error && send && (
+        <Notification text={error} status="error"/>
       )}
       <div className={styles.container}>
         <img className={styles.logo} src={Logo} alt="Logo" />

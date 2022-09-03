@@ -1,5 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { BASE_URL } from "api/baseUrl";
 import { fetchAddLink } from "../linksThunk";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -59,11 +60,13 @@ export const CreateLinks = (props: Props) => {
               <input
                 className={styles.input}
                 type="text"
-                value={`${BASE_URL}/${currentLink.short}`}
+                value={`${BASE_URL}/s/${currentLink.short}`}
                 disabled
               />
             </div>
-            <button className={styles.button}>Копировать</button>
+            <CopyToClipboard text={`${BASE_URL}/s/${currentLink.short}`}>
+              <button className={styles.button}>Копировать</button>
+            </CopyToClipboard>
           </>
         )}
       </div>

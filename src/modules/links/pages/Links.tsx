@@ -1,23 +1,14 @@
-import {useEffect} from 'react';
-import { useAppSelector, useAppDispatch } from 'core/redux/hooks';
-import { fetchGetLinks } from '../linksThunk';
-import {Table} from '../components/Table/Table';
-import styles from './links.module.scss';
+import { FC } from "react";
+import { Table } from "../components/Table/Table";
+import styles from "./links.module.scss";
 
-type Props = {}
+type Props = {};
 
-export const Links = (props: Props) => {
-  const {token} = useAppSelector(state => state.user.user);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const _token = token ? token : '';
-    dispatch(fetchGetLinks(_token))
-  }, [])
+export const Links:FC<Props> = (props) => {
 
   return (
     <div className={styles.container}>
-        <Table/>
+      <Table />
     </div>
-  )
-}
+  );
+};

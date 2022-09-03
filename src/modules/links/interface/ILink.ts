@@ -8,6 +8,10 @@ export interface ILink{
 export interface IInitialState{
     links:ILink[];
     currentLink:ILink | null;
+    limit:number,
+    offset:number,
+    order:string,
+    direction:string,
     loading:boolean;
     error:string | null;
 }

@@ -4,6 +4,7 @@ import { Registration, Login } from "modules/auth/pages";
 import { Links, CreateLinks } from "modules/links/pages";
 import { RequireAuth } from "common/helpers/RequireAuth";
 import { Wrapper } from "common/components/Wrapper/Wrapper";
+import { Notification } from "common/components/Notification/Notification";
 import "./variables.scss";
 
 export const App = () => {

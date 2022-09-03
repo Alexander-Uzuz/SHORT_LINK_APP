@@ -26,6 +26,12 @@
       padding: 0.625em;
       text-align: center;
 
+      .arrow_icon{
+        width: 10px;
+        margin-left: 3px;
+        cursor: pointer;
+      }
+
       div {
         cursor: pointer;
         display: inline-block;
@@ -36,6 +42,11 @@
           width: 12.5px;
           height: 14.5px;
         }
+      }
+
+      a{
+        text-decoration: none;
+        font-size: inherit;
       }
     }
 
@@ -49,6 +60,8 @@
     background-color: rgba(0, 0, 0, 0.075);
   }
 }
+
+
 
 @media screen and (max-width: 600px) {
   .table {

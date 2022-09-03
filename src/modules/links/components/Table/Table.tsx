@@ -1,50 +1,159 @@
-import React from "react";
-import { useAppSelector } from "core/redux/hooks";
+import { useState, FC, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "core/redux/hooks";
+import { Notification } from "common/components/Notification/Notification";
+import { useSearchParams } from "react-router-dom";
+import { Paginate } from "../Paginate/Paginate";
+import { fetchGetLinks } from "modules/links/linksThunk";
+import { useSortableData } from "modules/links/hooks/useSortableData";
+import { PAGE_SIZE } from "api/baseUrl";
+import { IKey } from "modules/links/interface/ISortConfig";
+import ArrowUpSort from "assets/icons/arrowUpSort.svg";
+import ArrowDownSort from "assets/icons/arrowDownSort.svg";
+import { ISortConfig } from "modules/links/interface/ISortConfig";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Copy from "assets/icons/copy.svg";
 import styles from "./Table.module.scss";
 type Props = {};
 
-export const Table = (props: Props) => {
-  const { links } = useAppSelector((state) => state.links);
+type IOrder =
+  | "desc_short"
+  | "asc_short"
+  | "asc_target"
+  | "desc_target"
+  | "asc_counter"
+  | "desc_counter";
 
-  const handleCopy = () => console.log("Все успешно скопировано");
+export const Table: FC<Props> = (props) => {
+  const { links, loading } = useAppSelector((state) => state.links);
+  const { token } = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const orderQuery: any = searchParams.get("order");
+  const offsetQuery = searchParams.get("offset");
+  const limitQuery = searchParams.get("limit");
+  const [visualNotification, setVisualNotification] = useState(false); //костыль
+  const [currentPage, setCurrentPage] = useState(1); //не реализовано
+  const { requestSort, sortConfig } = useSortableData(
+    orderQuery,
+    setSearchParams
+  );
+
+  const getKeyFor = (key: IKey) =>
+    sortConfig.key == key && sortConfig.direction === "asc"
+      ? ArrowUpSort
+      : ArrowDownSort;
+
+  const handleCopy = () => {
+    setVisualNotification(true);
+    setTimeout(() => {
+      setVisualNotification(false);
+    }, 6000);
+  };
+
+  const handlePageChange = (page: { selected: number }) => {
+    console.log(page.selected, "param");
+  };
+
+  useEffect(() => {
+    const _token = token ? token : "";
+    if (!links.length) {
+      dispatch(
+        fetchGetLinks({
+          params: {
+            offset: 0,
+            limit: 6,
+            order: orderQuery ? orderQuery : "asc_short",
+          },
+          token: _token,
+        })
+      );
+    }
+  }, []);
 
   return (
-    <table className={styles.table}>
-      <caption className={styles.caption}>Мои ссылки</caption>
-      <thead>
-        <tr className={styles.thead_tr}>
-          <th className={styles.th} scope="col">
-            Короткая ссылка
-          </th>
-          <th className={styles.th} scope="col">
-            Исходная ссылка
-          </th>
-          <th className={styles.th} scope="col">
-            Переходы
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {links.length &&
-          links.map((link) => {
-            return (
-              <tr className={styles.tr}>
-                <td className={styles.td}>{link.short}</td>
-                <td className={styles.td}>{link.target.slice(0, 24)}...</td>
-                <td className={styles.td}>{link.counter}</td>
-                <td className={styles.td}>
-                  <CopyToClipboard text={link.short}>
-                    <div className={styles.copy} onClick={handleCopy}>
-                      <img src={Copy} alt="Copy" />
-                    </div>
-                  </CopyToClipboard>
-                </td>
-              </tr>
-            );
-          })}
-      </tbody>
-    </table>
+    <>
+      {visualNotification && (
+        <Notification text="Ссылка успешно скопирована" status="success" />
+      )}
+      {
+        !loading
+        ?
+        <>
+        <table className={styles.table}>
+          <caption className={styles.caption}>Мои ссылки</caption>
+          <thead>
+            <tr className={styles.thead_tr}>
+              <th
+                onClick={() => requestSort("short")}
+                className={styles.th}
+                scope="col"
+              >
+                Короткая ссылка
+                <img
+                  className={styles.arrow_icon}
+                  src={getKeyFor("short")}
+                  alt="ArrowDown"
+                />
+              </th>
+              <th
+                onClick={() => requestSort("target")}
+                className={styles.th}
+                scope="col"
+              >
+                Исходная ссылка
+                <img
+                  className={styles.arrow_icon}
+                  src={getKeyFor("target")}
+                  alt="ArrowDown"
+                />
+              </th>
+              <th
+                onClick={() => requestSort("counter")}
+                className={styles.th}
+                scope="col"
+              >
+                Переходы
+                <img
+                  className={styles.arrow_icon}
+                  src={getKeyFor("counter")}
+                  alt="ArrowDown"
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {links.length &&
+              links.map((link) => {
+                return (
+                  <tr key={link.id} className={styles.tr}>
+                    <td className={styles.td}>
+                      <a href={link.short} target="_blank">
+                        {link.short}
+                      </a>
+                    </td>
+                    <td className={styles.td}>{link.target.slice(0, 24)}...</td>
+                    <td className={styles.td}>{link.counter}</td>
+                    <td className={styles.td}>
+                      <CopyToClipboard text={link.short}>
+                        <div className={styles.copy} onClick={handleCopy}>
+                          <img src={Copy} alt="Copy" />
+                        </div>
+                      </CopyToClipboard>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+        <Paginate
+          initialPage={currentPage - 1}
+          pageCount={Math.ceil(links.length / 6)}
+          onChange={handlePageChange}
+        />
+      </>
+      :
+      'loading...'
+      }
+    </>
   );
 };

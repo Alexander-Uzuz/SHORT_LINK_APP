@@ -5,6 +5,10 @@ import { fetchAddLink, fetchGetLinks } from "./linksThunk";
 const initialState: IInitialState = {
   links: [],
   currentLink:null,
+  limit:6,
+  offset:0,
+  order:'',
+  direction:'',
   loading: false,
   error: null,
 };
@@ -12,7 +16,9 @@ const initialState: IInitialState = {
 const linksSlice = createSlice({
   name: "links",
   initialState,
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchGetLinks.pending, (state) => {
       state.loading = true;

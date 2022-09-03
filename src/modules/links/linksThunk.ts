@@ -1,19 +1,21 @@
 import { createAsyncThunk, } from "@reduxjs/toolkit";
 import { BASE_URL } from "api/baseUrl";
 import { ILink } from "./interface/ILink";
-import { getLinks, addLink } from "api/links/linksRequest";
+import { IParams } from "api/links/interface/IParams";
+import { getLinks,getLink, addLink } from "api/links/linksRequest";
 
 
 export const fetchGetLinks = createAsyncThunk(
     'links/fetchGetLinks',
-    async function (token:string,{rejectWithValue}){
+    async function (data:{params:IParams,token:string},{rejectWithValue}){
+        const {params,token} = data;
         try{
-           const response:ILink[] = await getLinks({},token)
+           const response:ILink[] = await getLinks(params,token);
 
-           return response.map(item => {
+           return response.map((item) => {
             return {
                 ...item,
-                short:`${BASE_URL}/${item.short}`
+                short:`${BASE_URL}/s/${item.short}`
             }
            });
         }catch(error:any){

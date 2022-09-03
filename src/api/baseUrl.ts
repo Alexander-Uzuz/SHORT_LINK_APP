@@ -1,4 +1,5 @@
 export const BASE_URL = "http://79.143.31.216";
+export const PAGE_SIZE = 6;
 
 interface IBaseRequest {
   url: string;
@@ -54,4 +55,4 @@ export const post = (url: string, body?: string, token?: string) => {
   return request(`${BASE_URL}${url}`, { method: "POST", body, token });
 };
 
-export const get = (url: string, token: string) => request(`${BASE_URL}${url}`, {method: "GET",token})
+export const get = (url: string, token?: string) => request(`${BASE_URL}${url}`, {method: "GET",token})

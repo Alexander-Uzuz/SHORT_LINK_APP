@@ -1,0 +1,48 @@
+.ctrl {
+  width: 100%;
+  position: relative;
+}
+
+.notification {
+  display: block;
+  font-size: 14px;
+  width: 180px;
+  padding: 5px 0;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  margin-left: -90px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+  animation: moveOpen 6s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveOpen {
+  from {
+    transform: translate(0, -100px);
+  }
+  10% {
+    transform: translate(0, 20px);
+  }
+  12% {
+    transform: translate(0, 22px);
+  }
+  16% {
+    transform: translate(0, 20px);
+  }
+  80% {
+    transform: translate(0, 20px);
+  }
+  85% {
+    transform: translate(0, 25px);
+  }
+  to {
+    transform: translate(0, -100px);
+  }
+}
