@@ -6,10 +6,7 @@ import { fetchAddLink, fetchGetLinks, fetchGetAllLinks } from "./linksThunk";
 const initialState: IInitialState = {
   links: [],
   currentLink: null,
-  limit: 6,
   size: 0,
-  order: "",
-  direction: "",
   loading: false,
   error: null,
 };
@@ -47,12 +44,6 @@ const linksSlice = createSlice({
       fetchGetAllLinks.fulfilled,
       (state, action: PayloadAction<ILink[]>) => {
         state.size = action.payload.length;
-        state.links = action.payload.slice(0, state.limit).map(link => {
-          return {
-            ...link,
-            short:`${BASE_URL}/s/${link.short}`
-          }
-        })
         state.loading = false;
       }
     );

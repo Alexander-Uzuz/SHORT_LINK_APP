@@ -1,18 +1,16 @@
 import { IParams } from "./../../../api/links/interface/IParams";
-import { useAppDispatch, useAppSelector } from "./../../../core/redux/hooks";
-import { useMemo, useState, useEffect } from "react";
-import { ILink } from "../interface/ILink";
-import { fetchGetLinks } from "../linksThunk";
+import { useAppSelector } from "./../../../core/redux/hooks";
+import { useState, useEffect } from "react";
 import { ISortConfig, IKey, IDirection } from "../interface/ISortConfig";
 
 export const useSortableData = (
   orderQuery: string | null,
-  setSearchParams: any,
+  setSearchParams: (searchParams:any) => void,
+  setCurrentPage:(currentPage:number) => void,
   config: ISortConfig = { key: "short", direction: "asc" }
 ) => {
   const [sortConfig, setSortConfig] = useState<ISortConfig>(config);
-  const token = useAppSelector((state) => state.user.user.token);
-  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     let obj;
@@ -30,7 +28,6 @@ export const useSortableData = (
   }, []);
 
   const requestSort = (key: IKey) => {
-    const _token = token ? token : "";
     let direction: IDirection = "asc";
     if (
       sortConfig &&
@@ -47,14 +44,8 @@ export const useSortableData = (
       order: `${direction}_${key}`,
     };
 
-    setSearchParams(params);
-
-    // dispatch(
-    //   fetchGetLinks({
-    //     params,
-    //     token: _token,
-    //   })
-    // );
+    setSearchParams({...params});
+    setCurrentPage(0)
   };
 
   return { requestSort, sortConfig };
