@@ -6,6 +6,8 @@ export const getLinks = (
   token: string
 ) => get(`/statistics?order=${params.order}&offset=${params.offset}&limit=${params.limit}`, token);
 
+export const getAllLinks = (token:string) => get('/statistics', token);
+
 export const getLink = (url: string) => get(url);
 
 export const addLink = (text: string, token: string) =>

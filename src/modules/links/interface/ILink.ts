@@ -9,7 +9,7 @@ export interface IInitialState{
     links:ILink[];
     currentLink:ILink | null;
     limit:number,
-    offset:number,
+    size:number;
     order:string,
     direction:string,
     loading:boolean;

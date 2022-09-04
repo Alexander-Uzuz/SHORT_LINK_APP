@@ -49,12 +49,12 @@ export const useSortableData = (
 
     setSearchParams(params);
 
-    dispatch(
-      fetchGetLinks({
-        params,
-        token: _token,
-      })
-    );
+    // dispatch(
+    //   fetchGetLinks({
+    //     params,
+    //     token: _token,
+    //   })
+    // );
   };
 
   return { requestSort, sortConfig };
