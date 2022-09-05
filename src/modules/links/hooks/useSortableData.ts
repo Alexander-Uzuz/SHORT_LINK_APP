@@ -1,5 +1,4 @@
 import { IParams } from "./../../../api/links/interface/IParams";
-import { useAppSelector } from "./../../../core/redux/hooks";
 import { useState, useEffect } from "react";
 import { ISortConfig, IKey, IDirection } from "../interface/ISortConfig";
 

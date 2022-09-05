@@ -10,7 +10,7 @@ type Props = {
   onChange: (page: { selected: number }) => void;
 };
 
-export const Paginate: FC<Props> = (props) => {
+const PaginateInner: FC<Props> = (props) => {
   const { forcePage, pageCount, onChange } = props;
 
   return (
@@ -27,4 +27,6 @@ export const Paginate: FC<Props> = (props) => {
     </div>
   );
 };
+
+export const Paginate = memo(PaginateInner)
 

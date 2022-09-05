@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IStateUser, IStateUserData } from "./interfaces/IStateUser";
-import { fetchUserLogin } from "modules/auth/authThunk";
+import { IStateUser } from "./interfaces/IStateUser";
+import { fetchUserLogin,fetchUserRegistration } from "modules/auth/authThunk";
 
 const initialState: IStateUser = {
   user: {
@@ -27,6 +27,10 @@ const userSlice = createSlice({
       state.user = { username: null, token: null };
       state.error = null;
     });
+    builder.addCase(fetchUserRegistration.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
     builder.addCase(
       fetchUserLogin.fulfilled,
       (state, action: PayloadAction<IResponse>) => {
@@ -42,6 +46,10 @@ const userSlice = createSlice({
         state.error = action.payload;
       }
     );
+    builder.addCase(fetchUserRegistration.rejected, (state,action:PayloadAction<any>) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 

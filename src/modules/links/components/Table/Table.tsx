@@ -4,13 +4,11 @@ import { useSearchParams } from "react-router-dom";
 import { Paginate } from "../Paginate/Paginate";
 import { fetchGetLinks } from "modules/links/linksThunk";
 import { useSortableData } from "modules/links/hooks/useSortableData";
-import { IKey } from "modules/links/interface/ISortConfig";
-import ArrowUpSort from "assets/icons/arrowUpSort.svg";
-import ArrowDownSort from "assets/icons/arrowDownSort.svg";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import Copy from "assets/icons/copy.svg";
 import styles from "./Table.module.scss";
+import { Notification } from "common/components/Notification/Notification";
 import { Spinner } from "common/components/Spinner/Spinner";
+import { LinkComponent } from "../LinkComponent/LinkComponent";
+import { THead } from "../THead/THead";
 type Props = {};
 
 export const Table: FC<Props> = (props) => {
@@ -23,18 +21,13 @@ export const Table: FC<Props> = (props) => {
   const limitQuery = searchParams.get("limit") || "";
   const page = Math.ceil(Number(offsetQuery) / Number(limitQuery));
   const [currentPage, setCurrentPage] = useState(page);
+  const [notificationActive, setNotificationActive] = useState(false);
   const _token = token ? token : "";
-
   const { requestSort, sortConfig } = useSortableData(
     orderQuery,
     setSearchParams,
     setCurrentPage
   );
-
-  const getKeyFor = (key: IKey) =>
-    sortConfig.key == key && sortConfig.direction === "asc"
-      ? ArrowUpSort
-      : ArrowDownSort;
 
   const handlePageChange = (page: { selected: number }) => {
     let offset;
@@ -51,7 +44,7 @@ export const Table: FC<Props> = (props) => {
     };
     setSearchParams(params);
     setCurrentPage(page.selected);
-  }
+  };
 
   useEffect(() => {
     if (size) {
@@ -70,76 +63,35 @@ export const Table: FC<Props> = (props) => {
     }
   }, [size, searchParams]);
 
+  const handleCopy = () => {
+    setNotificationActive(true);
+    setTimeout(() => {
+      setNotificationActive(false);
+    }, 6000);
+  };
+
   return (
     <>
       {!loading ? (
         <>
+          {notificationActive && (
+            <Notification
+              text="Ссылка успешно скопирована в буфер обмена"
+              status="success"
+            />
+          )}
           <table className={styles.table}>
             <caption className={styles.caption}>Мои ссылки</caption>
-            <thead>
-              <tr className={styles.thead_tr}>
-                <th
-                  onClick={() => requestSort("short")}
-                  className={styles.th}
-                  scope="col"
-                >
-                  Короткая ссылка
-                  <img
-                    className={styles.arrow_icon}
-                    src={getKeyFor("short")}
-                    alt="ArrowDown"
-                  />
-                </th>
-                <th
-                  onClick={() => requestSort("target")}
-                  className={styles.th}
-                  scope="col"
-                >
-                  Исходная ссылка
-                  <img
-                    className={styles.arrow_icon}
-                    src={getKeyFor("target")}
-                    alt="ArrowDown"
-                  />
-                </th>
-                <th
-                  onClick={() => requestSort("counter")}
-                  className={styles.th}
-                  scope="col"
-                >
-                  Переходы
-                  <img
-                    className={styles.arrow_icon}
-                    src={getKeyFor("counter")}
-                    alt="ArrowDown"
-                  />
-                </th>
-              </tr>
-            </thead>
+            <THead sortConfig={sortConfig} requestSort={requestSort} />
             <tbody>
               {links.length &&
-                links.map((link) => {
-                  return (
-                    <tr key={link.id} className={styles.tr}>
-                      <td className={styles.td}>
-                        <a href={link.short} target="_blank">
-                          {link.short}
-                        </a>
-                      </td>
-                      <td className={styles.td}>
-                        {link.target.slice(0, 24)}...
-                      </td>
-                      <td className={styles.td}>{link.counter}</td>
-                      <td className={styles.td}>
-                        <CopyToClipboard text={link.short}>
-                          <div className={styles.copy}>
-                            <img src={Copy} alt="Copy" />
-                          </div>
-                        </CopyToClipboard>
-                      </td>
-                    </tr>
-                  );
-                })}
+                links.map((link) => (
+                  <LinkComponent
+                    key={link.id}
+                    link={link}
+                    handleCopy={handleCopy}
+                  />
+                ))}
             </tbody>
           </table>
           <Paginate

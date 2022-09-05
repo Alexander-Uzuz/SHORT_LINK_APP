@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Spinner } from "common/components/Spinner/Spinner";
 import { BASE_URL } from "api/baseUrl";
 import { fetchAddLink } from "../linksThunk";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,7 +15,7 @@ interface IForm {
 
 export const CreateLinks = (props: Props) => {
   const { token } = useAppSelector((state) => state.user.user);
-  const { currentLink } = useAppSelector((state) => state.links);
+  const { currentLink, loading } = useAppSelector((state) => state.links);
   const {
     register,
     handleSubmit,
@@ -29,47 +30,52 @@ export const CreateLinks = (props: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Сократите ссылку</h1>
-        <label className={styles.label} htmlFor="input">
-          Длинная ссылка
-        </label>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.input_container}>
-            <input
-              className={styles.input}
-              id="input"
-              type="text"
-              placeholder="Введите длинную ссылку"
-              {...register("link", { required: true })}
-            />
-            {errors.link && (
-              <span className={styles.input_error}>
-                Данное поле является обязательным
-              </span>
-            )}
-          </div>
-          <button className={styles.button}>Сократить</button>
-        </form>
-        {currentLink && (
-          <>
+      
+      {!loading ? (
+        <div className={styles.container}>
+          <h1 className={styles.title}>Сократите ссылку</h1>
+          <label className={styles.label} htmlFor="input">
+            Длинная ссылка
+          </label>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.input_container}>
-              <label className={styles.label} htmlFor="input">
-                Короткая ссылка
-              </label>
               <input
                 className={styles.input}
+                id="input"
                 type="text"
-                value={`${BASE_URL}/s/${currentLink.short}`}
-                disabled
+                placeholder="Введите длинную ссылку"
+                {...register("link", { required: true })}
               />
+              {errors.link && (
+                <span className={styles.input_error}>
+                  Данное поле является обязательным
+                </span>
+              )}
             </div>
-            <CopyToClipboard text={`${BASE_URL}/s/${currentLink.short}`}>
-              <button className={styles.button}>Копировать</button>
-            </CopyToClipboard>
-          </>
-        )}
-      </div>
+            <button className={styles.button}>Сократить</button>
+          </form>
+          {currentLink && (
+            <>
+              <div className={styles.input_container}>
+                <label className={styles.label} htmlFor="input">
+                  Короткая ссылка
+                </label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  value={`${BASE_URL}/s/${currentLink.short}`}
+                  disabled
+                />
+              </div>
+              <CopyToClipboard text={`${BASE_URL}/s/${currentLink.short}`}>
+                <button className={styles.button}>Копировать</button>
+              </CopyToClipboard>
+            </>
+          )}
+        </div>
+      ) : (
+        <Spinner/>
+      )}
     </div>
   );
 };

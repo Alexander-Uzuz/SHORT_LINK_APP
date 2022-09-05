@@ -22,20 +22,19 @@ export const Login: FC<Props> = (props) => {
     formState: { errors },
   } = useForm<Inputs>();
   const { error } = useAppSelector((state) => state.user);
-  const [send,setSend] = useState(false);
+  const [send, setSend] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) =>{
-    setSend(true)
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setSend(true);
+    setTimeout(() => {setSend(false)},6000)
     dispatch(fetchUserLogin({ ...data, cb: () => navigate("/links") }));
-  }
+  };
 
   return (
     <div className={styles.wrapper}>
-      {error && send && (
-        <Notification text={error} status="error"/>
-      )}
+      {error && send && <Notification text={error} status="error" />}
       <div className={styles.container}>
         <img className={styles.logo} src={Logo} alt="Logo" />
         <h1 className={styles.title}>С возвращением!</h1>

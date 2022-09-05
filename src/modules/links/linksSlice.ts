@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BASE_URL } from "api/baseUrl";
 import { IInitialState, ILink } from "./interface/ILink";
 import { fetchAddLink, fetchGetLinks, fetchGetAllLinks } from "./linksThunk";
 

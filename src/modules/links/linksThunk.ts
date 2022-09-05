@@ -2,7 +2,7 @@ import { createAsyncThunk, } from "@reduxjs/toolkit";
 import { BASE_URL } from "api/baseUrl";
 import { ILink } from "./interface/ILink";
 import { IParams } from "api/links/interface/IParams";
-import { getLinks,getLink, addLink, getAllLinks } from "api/links/linksRequest";
+import { getLinks,addLink, getAllLinks } from "api/links/linksRequest";
 
 export const fetchGetAllLinks = createAsyncThunk(
     'links/fetchGetAllLinks',

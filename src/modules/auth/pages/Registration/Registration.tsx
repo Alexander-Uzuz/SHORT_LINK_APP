@@ -30,7 +30,8 @@ export const Registration: FC<Props> = (props) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setSend(true)
+    setSend(true);
+    setTimeout(() => {setSend(false)},6000)
     dispatch(fetchUserRegistration({...data,cb:() => navigate('/links')}))
   }
 
