@@ -6,10 +6,9 @@ import {ILink} from '../../interface/ILink';
 
 type Props = {
     link:ILink;
-    handleCopy:() => void;
 };
 
-export const LinkComponent:FC<Props> = ({link, handleCopy}) => {
+export const LinkComponent:FC<Props> = ({link}) => {
   return (
     <tr key={link.id} className={styles.tr}>
       <td className={styles.td}>
@@ -21,7 +20,7 @@ export const LinkComponent:FC<Props> = ({link, handleCopy}) => {
       <td className={styles.td}>{link.counter}</td>
       <td className={styles.td}>
         <CopyToClipboard text={link.short}>
-          <div onClick={handleCopy} className={styles.copy}>
+          <div className={styles.copy}>
             <img src={Copy} alt="Copy" />
           </div>
         </CopyToClipboard>

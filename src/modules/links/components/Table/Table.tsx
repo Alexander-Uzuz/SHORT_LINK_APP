@@ -63,12 +63,6 @@ export const Table: FC<Props> = (props) => {
     }
   }, [size, searchParams]);
 
-  const handleCopy = () => {
-    setNotificationActive(true);
-    setTimeout(() => {
-      setNotificationActive(false);
-    }, 6000);
-  };
 
   return (
     <>
@@ -89,7 +83,6 @@ export const Table: FC<Props> = (props) => {
                   <LinkComponent
                     key={link.id}
                     link={link}
-                    handleCopy={handleCopy}
                   />
                 ))}
             </tbody>
